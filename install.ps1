@@ -15,7 +15,8 @@ $Apps = @(
   'AntibodySoftware.WizTree',
   'Notepad++.Notepad++',
   'FxSoundLLC.FxSound',
-  'Git.Git'
+  'Git.Git',
+  'Discord.Discord'
 )
 $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
