@@ -44,9 +44,10 @@ $debloat_argument_list = @(
   '-Hide3dObjects'
 )
 if ($FirstRun) {
+  Write-Output "First run detected, clearing start menu"
   $debloat_argument_list += '-ClearStart'
 }
-& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent $debloat_argument_list.Join(' ')
+& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent $debloat_argument_list
 
 # If wsl not installed, install it
 $wsl_install = wsl --list --quiet
