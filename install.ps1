@@ -1,3 +1,8 @@
+# Parameters
+param(
+  [switch]$FirstRun = $true
+)
+
 # Variables
 $Apps = @(
   'jazzdelightsme.WingetPathUpdater',
@@ -22,7 +27,26 @@ $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
 # Debloat Windows
-& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent -RemoveApps -RemoveW11Outlook -DisableDVR -RemoveDevApps -ClearStart -DisableTelemetry -ShowHiddenFolders -ShowKnownFileExt -ShowSearchLabelTb -HideTaskview -HideChat -DisableWidgets -DisableCopilot -HideOnedrive -Hide3dObjects
+$debloat_argument_list = @(
+  '-RemoveApps',
+  '-RemoveW11Outlook',
+  '-DisableDVR',
+  '-RemoveDevApps',
+  '-DisableTelemetry',
+  '-ShowHiddenFolders',
+  '-ShowKnownFileExt',
+  '-ShowSearchLabelTb',
+  '-HideTaskview',
+  '-HideChat',
+  '-DisableWidgets',
+  '-DisableCopilot',
+  '-HideOnedrive',
+  '-Hide3dObjects'
+)
+if ($FirstRun) {
+  $debloat_argument_list += '-ClearStart'
+}
+& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent $debloat_argument_list.Join(' ')
 
 # If wsl not installed, install it
 $wsl_install = wsl --list --quiet
