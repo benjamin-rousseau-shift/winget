@@ -130,3 +130,24 @@ foreach ($App in $Apps) {
   Write-Output "Installing $App"
   winget install -e --id $App --silent --accept-package-agreements --accept-source-agreements --log $logFile
 }
+
+# Disable Telemetry
+# Download reg file from https://raw.githubusercontent.com/benjamin-rousseau-shift/winget/main/DisableTelemetry.reg
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/benjamin-rousseau-shift/winget/main/DisableTelemetry.reg" -OutFile "C:\temp\DisableTelemetry.reg"
+reg import "C:\temp\DisableTelemetry.reg"
+
+# Clean Start Menu
+$startmenuBinFile = "C:\Users\$([Environment]::UserName)\AppData\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start2.bin"
+$backupBinFile = $startmenuBinFile + ".bak"
+
+# Check if bin file exists
+if (Test-Path $startmenuBinFile) {
+  # Backup current startmenu file
+  Move-Item -Path $startmenuBinFile -Destination $backupBinFile -Force
+
+  # Copy template file
+  Copy-Item -Path $startmenuTemplate -Destination $startmenuBinFile -Force
+
+  Write-Output "Replaced start menu for user $([Environment]::UserName)"
+  Write-Output ""
+}
