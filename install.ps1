@@ -25,7 +25,12 @@ $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 & ([scriptblock]::Create((irm "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -RunDefaults -Silent
 
 # Install wsl
-wsl --install
+try {
+  wsl --install
+}
+catch {
+  Write-Output "WSL already Installed"
+}
 
 # Create temp directory
 if (-not (Test-Path "C:\temp")) {
