@@ -64,10 +64,12 @@ $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 # If not using elevated privileges, restart the script with elevated privileges
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+$script = $MyInvocation.MyCommand.Definition
+$ps = Join-Path $PSHome 'powershell.exe'
 Write-Output "Checking for elevated privileges"
 if (!($currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
   Write-Output "Restarting script with elevated privileges"
-  Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+  Start-Process $ps -Verb runas -ArgumentList "& '$script'"
   exit
 }
 
