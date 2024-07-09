@@ -45,9 +45,10 @@ $debloat_argument_list = @(
 )
 if ($FirstRun) {
   Write-Output "First run detected, clearing start menu"
+  sleep 2
   $debloat_argument_list += '-ClearStart'
 }
-& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent $debloat_argument_list
+& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent $($debloat_argument_list -join ' ')
 
 # If wsl not installed, install it
 $wsl_install = wsl --list --quiet
