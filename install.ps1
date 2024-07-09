@@ -20,6 +20,9 @@ $Apps = @(
 $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
+# Install wsl
+wsl --install
+
 # Create temp directory
 if (-not (Test-Path "C:\temp")) {
   New-Item -ItemType Directory -Path "C:\temp"
