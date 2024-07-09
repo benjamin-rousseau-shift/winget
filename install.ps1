@@ -22,7 +22,7 @@ $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
 # Debloat Windows
-& ([scriptblock]::Create((irm "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -RunDefaults -Silent
+& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -RunDefaults -Silent
 
 # Install wsl
 try {
