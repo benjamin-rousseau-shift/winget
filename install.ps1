@@ -26,29 +26,8 @@ $Apps = @(
 $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
-# Debloat Windows
-$debloat_argument_list = @(
-  '-RemoveApps',
-  '-RemoveW11Outlook',
-  '-DisableDVR',
-  '-RemoveDevApps',
-  '-DisableTelemetry',
-  '-ShowHiddenFolders',
-  '-ShowKnownFileExt',
-  '-ShowSearchLabelTb',
-  '-HideTaskview',
-  '-HideChat',
-  '-DisableWidgets',
-  '-DisableCopilot',
-  '-HideOnedrive',
-  '-Hide3dObjects'
-)
-if ($FirstRun) {
-  Write-Output "First run detected, clearing start menu"
-  sleep 2
-  $debloat_argument_list += '-ClearStart'
-}
-& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent $($debloat_argument_list -join ' ')
+# Debloat Windows 11
+& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent -RemoveApps -RemoveW11Outlook -DisableDVR -RemoveDevApps -DisableTelemetry -ShowHiddenFolders -ShowKnownFileExt -ShowSearchLabelTb -HideTaskview -HideChat -DisableWidgets -DisableCopilot -HideOnedrive -Hide3dObjects -ClearStart:$FirstRun
 
 # If wsl not installed, install it
 $wsl_install = wsl --list --quiet
