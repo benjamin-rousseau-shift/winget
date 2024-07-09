@@ -21,12 +21,14 @@ $Apps = @(
 $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
-# Install wsl
-try {
+# Debloat Windows
+& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent -RemoveApps -RemoveW11Outlook -DisableDVR -RemoveDevApps -ClearStart -DisableTelemetry -ShowHiddenFolders -ShowHiddenFolders -ShowKnownFileExt -ShowSearchLabelTb -HideTaskview -HideChat -DisableWidgets -DisableCopilot -HideOnedrive -Hide3dObjects
+
+# If wsl not installed, install it
+$wsl_install = wsl --list --quiet
+if (-not $wsl_install) {
+  Write-Output "Installing WSL"
   wsl --install
-}
-catch {
-  Write-Output "WSL already Installed"
 }
 
 # Create temp directory
@@ -39,6 +41,3 @@ foreach ($App in $Apps) {
   Write-Output "Installing $App"
   winget install -e --id $App --silent --accept-package-agreements --accept-source-agreements --log $logFile
 }
-
-# Debloat Windows
-& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent -RemoveApps -RemoveW11Outlook -DisableDVR -RemoveDevApps -ClearStart -DisableTelemetry -ShowHiddenFolders -ShowHiddenFolders -ShowKnownFileExt -ShowSearchLabelTb -HideTaskview -HideChat -DisableWidgets -DisableCopilot -HideOnedrive -Hide3dObjects
