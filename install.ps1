@@ -18,104 +18,11 @@ $Apps = @(
   'Git.Git',
   'Discord.Discord'
 )
-$WindowsBloatwares = @(
-  'Microsoft.OutlookForWindows',
-  'Windows.DevHome',
-  'Clipchamp.Clipchamp',
-  'Microsoft.3DBuilder',
-  'Microsoft.549981C3F5F10', #Cortana app
-  'Microsoft.BingFinance',
-  'Microsoft.BingFoodAndDrink',            
-  'Microsoft.BingHealthAndFitness',        
-  'Microsoft.BingNews',
-  'Microsoft.BingSports',
-  'Microsoft.BingTranslator',
-  'Microsoft.BingTravel',
-  'Microsoft.BingWeather',
-  'Microsoft.Getstarted', # Cannot be uninstalled in Windows 11
-  'Microsoft.Messaging',
-  'Microsoft.Microsoft3DViewer',
-  'Microsoft.MicrosoftJournal',
-  'Microsoft.MicrosoftOfficeHub',
-  'Microsoft.MicrosoftPowerBIForWindows',
-  'Microsoft.MicrosoftSolitaireCollection',
-  'Microsoft.MicrosoftStickyNotes',
-  'Microsoft.MixedReality.Portal',
-  'Microsoft.NetworkSpeedTest',
-  'Microsoft.News',
-  'Microsoft.Office.OneNote',
-  'Microsoft.Office.Sway',
-  'Microsoft.OneConnect',
-  'Microsoft.Print3D',
-  'Microsoft.SkypeApp',
-  'Microsoft.Todos',
-  'Microsoft.WindowsAlarms',
-  'Microsoft.WindowsFeedbackHub',
-  'Microsoft.WindowsMaps',
-  'Microsoft.WindowsSoundRecorder',
-  'Microsoft.XboxApp', # Old Xbox Console Companion App, no longer supported
-  'Microsoft.ZuneVideo',
-  'MicrosoftCorporationII.MicrosoftFamily', # Family Safety App
-  'MicrosoftCorporationII.QuickAssist',
-  'MicrosoftTeams', # Old MS Teams personal (MS Store)
-  'MSTeams', # New MS Teams app
-  'ACGMediaPlayer',
-  'ActiproSoftwareLLC',
-  'AdobeSystemsIncorporated.AdobePhotoshopExpress',
-  'Amazon.com.Amazon',
-  'AmazonVideo.PrimeVideo',
-  'Asphalt8Airborne',
-  'AutodeskSketchBook',
-  'CaesarsSlotsFreeCasino',
-  'COOKINGFEVER',
-  'CyberLinkMediaSuiteEssentials',
-  'DisneyMagicKingdoms',
-  'Disney',
-  'DrawboardPDF',
-  'Duolingo-LearnLanguagesforFree',
-  'EclipseManager',
-  'Facebook',
-  'FarmVille2CountryEscape',
-  'fitbit',
-  'Flipboard',
-  'HiddenCity',
-  'HULULLC.HULUPLUS',
-  'iHeartRadio',
-  'Instagram',
-  'king.com.BubbleWitch3Saga',
-  'king.com.CandyCrushSaga',
-  'king.com.CandyCrushSodaSaga',
-  'LinkedInforWindows',
-  'MarchofEmpires',
-  'Netflix',
-  'NYTCrossword',
-  'OneCalendar',
-  'PandoraMediaInc',
-  'PhototasticCollage',
-  'PicsArt-PhotoStudio',
-  'Plex',
-  'PolarrPhotoEditorAcademicEdition',
-  'Royal Revolt',
-  'Shazam',
-  'Sidia.LiveWallpaper',
-  'SlingTV',
-  'Spotify',
-  'TikTok',
-  'TuneInRadio',
-  'Twitter',
-  'Viber',
-  'WinZipUniversal',
-  'Wunderlist',
-  'XING'
-)
 $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
-# We Uninstall Windows Bloatwares
-foreach ($App in $WindowsBloatwares) {
-  Write-Output "Uninstalling $App"
-  Get-AppxPackage -Name $app -AllUsers | Remove-AppxPackage -AllUsers
-}
+# Debloat Windows
+& ([scriptblock]::Create((irm "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -RunDefaults -Silent
 
 # Install wsl
 wsl --install
@@ -129,25 +36,4 @@ if (-not (Test-Path "C:\temp")) {
 foreach ($App in $Apps) {
   Write-Output "Installing $App"
   winget install -e --id $App --silent --accept-package-agreements --accept-source-agreements --log $logFile
-}
-
-# Disable Telemetry
-# Download reg file from https://raw.githubusercontent.com/benjamin-rousseau-shift/winget/main/DisableTelemetry.reg
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/benjamin-rousseau-shift/winget/main/DisableTelemetry.reg" -OutFile "C:\temp\DisableTelemetry.reg"
-reg import "C:\temp\DisableTelemetry.reg"
-
-# Clean Start Menu
-$startmenuBinFile = "C:\Users\$([Environment]::UserName)\AppData\Local\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start2.bin"
-$backupBinFile = $startmenuBinFile + ".bak"
-
-# Check if bin file exists
-if (Test-Path $startmenuBinFile) {
-  # Backup current startmenu file
-  Move-Item -Path $startmenuBinFile -Destination $backupBinFile -Force
-
-  # Copy template file
-  Copy-Item -Path $startmenuTemplate -Destination $startmenuBinFile -Force
-
-  Write-Output "Replaced start menu for user $([Environment]::UserName)"
-  Write-Output ""
 }
