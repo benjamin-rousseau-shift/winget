@@ -19,6 +19,8 @@ $Apps = @(
   'Discord.Discord'
 )
 $WindowsBloatwares = @(
+  'Microsoft.OutlookForWindows',
+  'Windows.DevHome',
   'Clipchamp.Clipchamp',
   'Microsoft.3DBuilder',
   'Microsoft.549981C3F5F10', #Cortana app
