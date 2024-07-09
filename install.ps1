@@ -61,6 +61,14 @@ $WindowsBloatwares = @(
 $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
+# If not using elevated privileges, restart the script with elevated privileges
+$currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
+$currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+  Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+  exit
+}
+
 # We Uninstall Windows Bloatwares
 foreach ($App in $WindowsBloatwares) {
   Write-Output "Uninstalling $App"

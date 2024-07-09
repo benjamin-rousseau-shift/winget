@@ -1,1 +1,2 @@
-Powershell -ExecutionPolicy Bypass -Scope Process -Force -Verb RunAs -Command "& Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/benjamin-rousseau-shift/winget/main/install.ps1'));"
+# Needs to be launched with elevated privileges.
+Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/benjamin-rousseau-shift/winget/main/install.ps1'));
