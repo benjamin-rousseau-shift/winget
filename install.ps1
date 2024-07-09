@@ -1,6 +1,6 @@
 # Parameters
 param(
-  [switch]$FirstRun = $true
+  [switch]$FirstRun
 )
 
 # Variables
