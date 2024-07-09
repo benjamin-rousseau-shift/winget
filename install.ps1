@@ -27,13 +27,7 @@ $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
 # Debloat Windows 11
-if ($FirstRun.IsPresent) {
-  $ClearStart = $True
-}
-else {
-  $ClearStart = $False
-}
-& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent -RemoveApps -RemoveW11Outlook -DisableDVR -RemoveDevApps -DisableTelemetry -ShowHiddenFolders -ShowKnownFileExt -ShowSearchLabelTb -HideTaskview -HideChat -DisableWidgets -DisableCopilot -HideOnedrive -Hide3dObjects -ClearStart:$ClearStart
+& ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent -RemoveApps -RemoveW11Outlook -DisableDVR -RemoveDevApps -DisableTelemetry -ShowHiddenFolders -ShowKnownFileExt -ShowSearchLabelTb -HideTaskview -HideChat -DisableWidgets -DisableCopilot -HideOnedrive -Hide3dObjects -ClearStart
 
 # If wsl not installed, install it
 $wsl_install = wsl --list --quiet
