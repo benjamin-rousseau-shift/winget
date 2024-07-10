@@ -45,7 +45,7 @@ debloat_parameters = @{
 }
 
 if ($FirstRun) {
-  debloat_parameters.ClearStart = $true
+  debloat_parameters.Add("FirstRun", $true)
 }
 & ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent @debloat_parameters
 
