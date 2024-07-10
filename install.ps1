@@ -25,7 +25,9 @@ $Apps = @(
   'Nvidia.GeForceExperience',
   'Ubisoft.Connect',
   'ZeroTier.ZeroTierOne',
-  'ElectronicArts.EADesktop'
+  'ElectronicArts.EADesktop',
+  'LINE.LINE',
+  'ACLAP.DownloadHelperCoApp'
 )
 $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
