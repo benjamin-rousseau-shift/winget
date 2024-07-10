@@ -27,7 +27,7 @@ $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
 
 # Debloat Windows 11
-debloat_parameters = @{
+$debloat_parameters = @{
   RemoveApps        = $true
   RemoveW11Outlook  = $true
   DisableDVR        = $true
@@ -45,7 +45,7 @@ debloat_parameters = @{
 }
 
 if ($FirstRun) {
-  debloat_parameters.Add("FirstRun", $true)
+  $debloat_parameters.ClearStart = $true
 }
 & ([scriptblock]::Create((Invoke-RestMethod "https://raw.githubusercontent.com/Raphire/Win11Debloat/master/Get.ps1"))) -Silent @debloat_parameters
 
