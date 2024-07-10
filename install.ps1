@@ -15,7 +15,7 @@ $Apps = @(
   'VideoLAN.VLC',
   'Microsoft.VisualStudioCode',
   'MOTU.MSeries',
-  'Spotify.Spotify',
+  'Spotify.Spotify', # Can't be installed as admin
   'EpicGames.EpicGamesLauncher',
   'AntibodySoftware.WizTree',
   'Notepad++.Notepad++',
