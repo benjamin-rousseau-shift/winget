@@ -21,7 +21,11 @@ $Apps = @(
   'Notepad++.Notepad++',
   'FxSoundLLC.FxSound',
   'Git.Git',
-  'Discord.Discord'
+  'Discord.Discord',
+  'Nvidia.GeForceExperience',
+  'Ubisoft.Connect',
+  'ZeroTier.ZeroTierOne',
+  'ElectronicArts.EADesktop'
 )
 $CurrentDateTime = Get-Date -Format "yyyy-MM-dd-HH-mm-ss"
 $logFile = "C:\temp\winget-$($CurrentDateTime).log"
